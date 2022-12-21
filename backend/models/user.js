@@ -9,6 +9,18 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(Comment, { as: 'author', foreignKey: 'author_id' })
     }
 
+    cannotAddPlaces() {
+      return this.role !== 'admin';
+    }
+
+    cannotEditPlaces() {
+      return this.role !== 'admin';
+    }
+
+    cannotDeletePlaces() {
+      return this.role !== 'admin';
+    }
+
   };
   User.init({
     userId: {
@@ -20,6 +32,13 @@ module.exports = (sequelize, DataTypes) => {
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     email: DataTypes.STRING,
+    role: {
+      type: DataTypes.ENUM,
+      values: [
+        'reviewer',
+        'admin'
+      ]
+    },
     passwordDigest: DataTypes.STRING
   }, {
     sequelize,
