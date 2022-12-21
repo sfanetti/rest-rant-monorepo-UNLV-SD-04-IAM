@@ -26,8 +26,15 @@ function Navigation() {
     if (currentUser) {
         loginActions = (
             <>
-                <li style={{ float: 'right' }}>
-                    <a href="#" onClick={() => {
+                <li style={{ 
+                    float: 'right', 
+                }}>
+                    <a href="#"
+                        style={{
+                            lineHeight: '30px',
+                            fontSize: '1rem',
+                        }}
+                        onClick={() => {
                             localStorage.removeItem('token');
                             setCurrentUser(null)
                             history.push("/")
@@ -35,7 +42,11 @@ function Navigation() {
                         LogOut
                     </a>
                 </li>
-                <li style={{ float: 'right' }}>
+                <li style={{
+                        float: 'right',
+                        lineHeight: '30px',
+                        color: 'white'
+                    }}>
                     Logged in as {currentUser.firstName} {currentUser.lastName}
                 </li>
             </>
