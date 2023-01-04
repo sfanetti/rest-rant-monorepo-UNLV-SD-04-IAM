@@ -5,6 +5,8 @@ orbs:
 workflows:
   elastic-beanstalk-workflow:
     jobs:
+      - node/test:
+          app-dir: ~/project/backend
       - eb/deploy:
           app-dir: ~/project/backend
           context: aws-creds
@@ -13,7 +15,7 @@ workflows:
           filters:
             branches:
               only:
-                - jwt-authentication
+                - main
           label: version-<<pipeline.number>>
           requires:
             - node/test
