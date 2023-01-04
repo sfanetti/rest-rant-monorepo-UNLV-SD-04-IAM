@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const db = require('../models');
 const bcrypt = require('bcrypt');
+const jwt = require('json-web-token');
 
 const { User } = db;
 
@@ -16,8 +17,13 @@ router.post('/', async (req, res) => {
             message: 'Ur user cannot be founded'
         });
     } else {
-        res.json({ user });
+        const result = await jwt.encode(process.env.JWT_SECRET, { id: user.userId });
+        res.json({ user, token: result.value });
     }
 })
+
+router.get('/profile', async (req, res) => {
+    res.json(req.currentUser)
+});
 
 module.exports = router;

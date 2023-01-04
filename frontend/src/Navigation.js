@@ -6,7 +6,7 @@ function Navigation() {
 
     const history = useHistory()
 
-    const { currentUser } = useContext(CurrentUser)
+    const { currentUser, setCurrentUser } = useContext(CurrentUser)
 
     let loginActions = (
         <>
@@ -25,8 +25,41 @@ function Navigation() {
 
     if (currentUser) {
         loginActions = (
-            <li style={{ float: 'right' }}>
-                Logged in as {currentUser.firstName} {currentUser.lastName}
+            <>
+                <li style={{ 
+                    float: 'right', 
+                }}>
+                    <a href="#"
+                        style={{
+                            lineHeight: '30px',
+                            fontSize: '1rem',
+                        }}
+                        onClick={() => {
+                            localStorage.removeItem('token');
+                            setCurrentUser(null)
+                            history.push("/")
+                        }}>
+                        LogOut
+                    </a>
+                </li>
+                <li style={{
+                        float: 'right',
+                        lineHeight: '30px',
+                        color: 'white'
+                    }}>
+                    Logged in as {currentUser.firstName} {currentUser.lastName}
+                </li>
+            </>
+        )
+    }
+
+    let addPlacesButton = null;
+    if (currentUser?.role === 'admin') {
+        addPlacesButton = (
+            <li>
+                <a href="#" onClick={() => history.push("/places/new")}>
+                    Add Place
+                </a>
             </li>
         )
     }
@@ -44,11 +77,7 @@ function Navigation() {
                         Places
                     </a>
                 </li>
-                <li>
-                    <a href="#" onClick={() => history.push("/places/new")}>
-                        Add Place
-                    </a>
-                </li>
+                {addPlacesButton}
                 {loginActions}
             </ul>
         </nav>
