@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const path = require('path');
 const app = express();
 const defineCurrentUser = require('./middleware/defineCurrentUser');
 
@@ -20,6 +21,10 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/places', require('./controllers/places'))
 app.use('/users', require('./controllers/users'))
 app.use('/authentication', require('./controllers/authentication'))
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'client', 'build')));
+}
 
 // Listen for Connections
 app.listen(process.env.PORT, () => {
