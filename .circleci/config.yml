@@ -10,8 +10,8 @@ workflows:
       - eb/deploy:
           app-dir: ~/project/backend
           context: aws-creds-2
-          application-name: Project
-          environment-name: project-env
+          application-name: rest-rant-eb-01
+          environment-name: Restranteb01-env.eba-rjyvbxxm.us-east-1.elasticbeanstalk.com
           filters:
             branches:
               only:
